@@ -1,0 +1,71 @@
+# Логи
+*.log
+/var/log/aurora-setup.log
+
+# Временные файлы
+*.tmp
+*.temp
+/tmp/*
+
+# Системные файлы
+.DS_Store
+Thumbs.db
+
+# Бэкапы
+*.backup
+*.bak
+*.orig
+
+# Конфиденциальные данные
+*.key
+*.pem
+*.crt
+id_rsa*
+known_hosts
+
+# Кэш Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Виртуальные окружения
+venv/
+env/
+ENV/
+
+# IDE файлы
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Локальные настройки
+local_settings.py
+.env
+.env.local
+
+# Системные конфигурации (не для репозитория)
+/etc/ssh/ssh_host_*
+/etc/ssl/private/*
+
+# Статусные файлы
+/tmp/server-status
+/tmp/admin-messages

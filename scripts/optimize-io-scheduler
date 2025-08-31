@@ -1,0 +1,19 @@
+#!/bin/bash
+# Автоматическая оптимизация I/O планировщика
+
+# Проверяем тип дисков и устанавливаем оптимальный планировщик
+for disk in $(lsblk -d -n -o name); do
+    if [ -f /sys/block/$disk/queue/rotational ]; then
+        rotational=$(cat /sys/block/$disk/queue/rotational)
+        
+        if [ "$rotational" = "0" ]; then
+            # SSD - используем mq-deadline или none
+            echo "mq-deadline" > /sys/block/$disk/queue/scheduler 2>/dev/null || echo "none" > /sys/block/$disk/queue/scheduler 2>/dev/null
+            echo "Диск $disk (SSD): установлен планировщик mq-deadline"
+        else
+            # HDD - используем bfq или mq-deadline
+            echo "bfq" > /sys/block/$disk/queue/scheduler 2>/dev/null || echo "mq-deadline" > /sys/block/$disk/queue/scheduler 2>/dev/null
+            echo "Диск $disk (HDD): установлен планировщик bfq"
+        fi
+    fi
+done

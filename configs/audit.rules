@@ -1,0 +1,32 @@
+## First rule - delete all
+-D
+
+## Increase the buffers to survive stress events.
+## Make this bigger for busy systems
+-b 8192
+
+## This determine how long to wait in burst of events
+--backlog_wait_time 60000
+
+## Set failure mode to syslog
+-f 1
+
+## Audit SSH connections
+-w /var/log/auth.log -p wa -k ssh_logins
+
+## Audit file access
+-w /etc/passwd -p wa -k passwd_changes
+-w /etc/shadow -p wa -k shadow_changes
+-w /etc/sudoers -p wa -k sudoers_changes
+
+## Audit system calls
+-a always,exit -F arch=b64 -S execve -k exec_commands
+-a always,exit -F arch=b32 -S execve -k exec_commands
+
+## Network monitoring
+-a always,exit -F arch=b64 -S socket -k network_connections
+-a always,exit -F arch=b32 -S socket -k network_connections
+
+## Make the configuration immutable
+-e 2
+
